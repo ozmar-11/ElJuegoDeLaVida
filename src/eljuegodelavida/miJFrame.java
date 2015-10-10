@@ -277,7 +277,7 @@ public class miJFrame extends javax.swing.JFrame {
             limY=Integer.parseInt(jTextField2.getText());                   
         }catch(NumberFormatException nfe){
             //se lanza mensaje de error en caso de la introduccion de un valor incorrecto
-            JOptionPane.showMessageDialog(null, "Los valores ingresados para el tamaño del tablero y el tiempo deben ser numeros y enteros","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Los valores ingresados para el tamaño del tablero deben ser numeros y enteros","Error",JOptionPane.ERROR_MESSAGE);
             dimencionarTablero(50,50);      
         }finally
         {
