@@ -34,11 +34,17 @@ public class miJFrame extends javax.swing.JFrame {
     
     public void dimencionarTablero(int x, int y){
         tablero=new boolean[x][y];
-        tablero[23][25]=true;
+        tablero[22][25]=true;
         tablero[23][24]=true;
-        tablero[24][25]=true;
-        tablero[24][26]=true;
         tablero[25][25]=true;
+        tablero[24][24]=true;
+        tablero[24][26]=true;
+        tablero[23][26]=true;
+        tablero[26][24]=true;
+        tablero[26][26]=true;
+        tablero[27][24]=true;
+        tablero[27][26]=true;
+        tablero[28][25]=true;
         limX=x;
         limY=y;
         repaint();
@@ -149,7 +155,7 @@ public class miJFrame extends javax.swing.JFrame {
                     //check[x+1][y];check[x+1][y+1];check[x][y+1];
                 }
                 //si la casilla tiene solo a 3 vecinos cerca vive
-                if(cuentaVivos==3||cuentaVivos==2)
+                if(cuentaVivos==3)
                 {
                     tablero[x][y]=true;
                 }
@@ -342,7 +348,7 @@ public class miJFrame extends javax.swing.JFrame {
                 }else
                 {
                     g.setColor(Color.black);
-                    g.fillRect(posActX, posActY, 10, 10);
+                    g.drawRect(posActX, posActY, 10, 10);
                     posActX+=10;
                 }              
             }
