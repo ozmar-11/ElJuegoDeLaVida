@@ -18,7 +18,8 @@ import javax.swing.Timer;
  */
 public class miJFrame extends javax.swing.JFrame {
 
-    boolean tablero[][];  
+    boolean tablero[][];
+    boolean tablero2[][];
     int limX,limY,genAct;    
     Timer timer = new Timer (1_000, new ActionListener () 
         {                                      
@@ -28,23 +29,29 @@ public class miJFrame extends javax.swing.JFrame {
                 generacion();
                 genAct++;                
                 repaint();
-                jLabel2.setText(String.valueOf(genAct));                
+                jLabel2.setText(String.valueOf(genAct));                 
             }
         });
     
     public void dimencionarTablero(int x, int y){
-        tablero=new boolean[x][y];
-        tablero[22][25]=true;
-        tablero[23][24]=true;
-        tablero[25][25]=true;
-        tablero[24][24]=true;
-        tablero[24][26]=true;
-        tablero[23][26]=true;
-        tablero[26][24]=true;
-        tablero[26][26]=true;
-        tablero[27][24]=true;
-        tablero[27][26]=true;
-        tablero[28][25]=true;
+        tablero = new boolean[x][y];
+        tablero2 = new boolean[x][y];
+//        tablero[22][25]=true;
+//        tablero[23][24]=true;
+//        tablero[25][25]=true;
+//        tablero[24][24]=true;
+//        tablero[24][26]=true;
+//        tablero[23][26]=true;
+//        tablero[26][24]=true;
+//        tablero[26][26]=true;
+//        tablero[27][24]=true;
+//        tablero[27][26]=true;
+//        tablero[28][25]=true;
+        tablero[1][0]=true;
+        tablero[3][0]=true;
+        tablero[2][1]=true;
+        tablero[1][2]=true;
+        tablero[3][2]=true;
         limX=x;
         limY=y;
         repaint();
@@ -155,18 +162,39 @@ public class miJFrame extends javax.swing.JFrame {
                     //check[x+1][y];check[x+1][y+1];check[x][y+1];
                 }
                 //si la casilla tiene solo a 3 vecinos cerca vive
+//                if(cuentaVivos==3||cuentaVivos==2)
+//                {
+//                    tablero2[x][y]=true;
+//                }
+//                else{
+//                    tablero2[x][y]=false;
+//                }
                 if(cuentaVivos==3)
                 {
-                    tablero[x][y]=true;
+                    tablero2[x][y]=true;
                 }
                 else{
-                    tablero[x][y]=false;
+                    if (cuentaVivos==2 && tablero[x][y]==true)
+                        tablero2[x][y]=true;
+                    else
+                        tablero2[x][y]=false;
                 }
                 //se reinicia el contador
                 cuentaVivos=0;
             }
         }        
     }
+    
+    private void copiaMatriz(){
+        for(int y=0;y<limY;y++){
+            for(int x=0;x<limX;x++)
+            {
+                tablero[x][y]=tablero2[x][y];
+                tablero2[x][y]=false;
+            }
+        }
+    }    
+    
     /**
      * Creates new form miJFrame
      */
@@ -192,6 +220,7 @@ public class miJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("El Juego de la vida");
@@ -212,12 +241,12 @@ public class miJFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Tablero X:");
 
-        jTextField1.setText("50");
+        jTextField1.setText("5");
         jTextField1.setName("txtTableroX"); // NOI18N
 
         jLabel4.setText("Tamaño en Y:");
 
-        jTextField2.setText("50");
+        jTextField2.setText("3");
         jTextField2.setName("txtTableroY"); // NOI18N
 
         jButton2.setText("Detener");
@@ -225,6 +254,13 @@ public class miJFrame extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setLabel("Siguiente generacion");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -248,7 +284,9 @@ public class miJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 581, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(0, 454, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,11 +299,10 @@ public class miJFrame extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addGap(0, 731, Short.MAX_VALUE))
         );
-
-        getAccessibleContext().setAccessibleName("El Juego de la vida");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -284,16 +321,22 @@ public class miJFrame extends javax.swing.JFrame {
             repaint();
             dimencionarTablero(limX,limY);
             genAct=0;
-            timer.start();     
-            jButton2.setEnabled(true);
+            //timer.start();     
+            //jButton2.setEnabled(true);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        timer.stop();   
+        //timer.stop();   
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        generacion();
+        copiaMatriz();
+        repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
      
     /**
      * @param args the command line arguments
@@ -363,6 +406,7 @@ public class miJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
