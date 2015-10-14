@@ -47,6 +47,7 @@ public class miJFrame extends javax.swing.JFrame {
 //        tablero[27][24]=true;
 //        tablero[27][26]=true;
 //        tablero[28][25]=true;
+        
         tablero[1][0]=true;
         tablero[3][0]=true;
         tablero[2][1]=true;
@@ -59,130 +60,485 @@ public class miJFrame extends javax.swing.JFrame {
     //funcion para crear la nueva generacion de casillas
     public void generacion(){
         int cuentaVivos=0;
-        for(int y=0;y<limY;y++)
+        
+        //Ciclos para revisar todas las celadas excepto los limites
+        for(int y=1;y<(limY-1);y++)
         {
-            for(int x=0;x<limX;x++)
-            {                            
-                //Revision de los lados izquierdo y superior
-                if(x>0 && y>0 && x<(limX-1))
+            for(int x=1;x<(limX-1);x++)
+            {
+                if(tablero[x-1][y-1]==true)
                 {
-                    if(tablero[x][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x+1][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x][y-1], check[x-1][y-1],check[x-1][y],check[x+1][y-1]
-                }else if(x>0 && y==0){
-                    if(tablero[x-1][y])
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x-1][y];
-                }else if(y>0 && x==0){
-                    if(tablero[x][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x+1][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x][y-1];check[x+1][y-1];
+                    cuentaVivos++;
                 }
-                if (x<(limX-1)  && y<(limY-1) && x>0){
-                    if(tablero[x+1][y]==true){
-                        cuentaVivos++;
-                    }
-                    if(tablero[x+1][y+1]==true){
-                        cuentaVivos++;
-                    }
-                    if(tablero[x][y+1]==true){
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y+1]==true){
-                        cuentaVivos++;
-                    }
-                    //check[x+1][y];check[x+1][y+1];check[x][y+1];check[x-1][y+1];
-                }else if(x<(limX-1) && y==limY){
-                    if(tablero[x+1][y]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x+1][y];
-                }else if(y<(limY-1) && x==(limX-1)){
-                    if(tablero[x][y+1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y+1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x][y+1];check[x-1][y+1];
+                if(tablero[x][y-1]==true)
+                {
+                    cuentaVivos++;
                 }
-                if(x>0 && y>0 && x==(limX-1)){
-                    if(tablero[x][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y-1]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x-1][y]==true)
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x][y-1];check[x-1][y-1];check[x-1][y];
+                if(tablero[x+1][y-1]==true)
+                {
+                    cuentaVivos++;
                 }
-                if(x<(limX-1) && y<(limY-1) && x==0){                    
-                    if(tablero[x+1][y])
-                    {
-                        cuentaVivos++;
-                    }                    
-                    if(tablero[x+1][y+1])
-                    {
-                        cuentaVivos++;
-                    }
-                    if(tablero[x][y+1])
-                    {
-                        cuentaVivos++;
-                    }
-                    //check[x+1][y];check[x+1][y+1];check[x][y+1];
+                if(tablero[x-1][y]==true)
+                {
+                    cuentaVivos++;
                 }
-                //si la casilla tiene solo a 3 vecinos cerca vive
+                if(tablero[x+1][y]==true)
+                {
+                    cuentaVivos++;
+                }
+                if(tablero[x-1][y+1]==true)
+                {
+                    cuentaVivos++;
+                }
+                if(tablero[x+1][y+1]==true)
+                {
+                    cuentaVivos++;
+                }
+                if(tablero[x][y+1]==true)
+                {
+                    cuentaVivos++;
+                }
+                //Se revisa si la celula vive o muere
 //                if(cuentaVivos==3||cuentaVivos==2)
 //                {
 //                    tablero2[x][y]=true;
 //                }
 //                else{
 //                    tablero2[x][y]=false;
-//                }
+//                }                
                 if(cuentaVivos==3)
                 {
                     tablero2[x][y]=true;
                 }
                 else{
                     if (cuentaVivos==2 && tablero[x][y]==true)
-                        tablero2[x][y]=true;
+                    tablero2[x][y]=true;
                     else
-                        tablero2[x][y]=false;
+                    tablero2[x][y]=false;
                 }
-                //se reinicia el contador
                 cuentaVivos=0;
+            }            
+        }
+        for(int x=1;x<(limX-1);x++)
+        {
+            //esto revisa el limite superior salvo las esquinas
+            if(tablero[x-1][0]==true)
+            {
+                cuentaVivos++;
             }
-        }        
+            if(tablero[x+1][0]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x-1][1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x][1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x+1][1]==true)
+            {
+                cuentaVivos++;
+            }
+            //Se revisa si la celula vive o muere
+//            if(cuentaVivos==3||cuentaVivos==2)
+//            {
+//                tablero2[x][0]=true;
+//            }
+//            else{
+//                tablero2[x][0]=false;
+//            }            
+            if(cuentaVivos==3)
+            {
+                tablero2[x][0]=true;
+            }
+            else{
+                if (cuentaVivos==2 && tablero[x][0]==true)
+                tablero2[x][0]=true;
+                else
+                tablero2[x][0]=false;
+            }
+            cuentaVivos=0;
+            //esto revisa el limite inferior salvo las esquinas
+            if(tablero[x-1][(limY-1)]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x+1][(limY-1)]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x-1][(limY-1)-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x][(limY-1)-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[x+1][(limY-1)-1]==true)
+            {
+                cuentaVivos++;
+            }
+            //Se revisa si la celula vive o muere
+//            if(cuentaVivos==3||cuentaVivos==2)
+//            {
+//                tablero2[x][(limY-1)]=true;
+//            }
+//            else{
+//                tablero2[x][(limY-1)]=false;
+//            }            
+            if(cuentaVivos==3)
+            {
+                tablero2[x][(limY-1)]=true;
+            }
+            else{
+                if (cuentaVivos==2 && tablero[x][(limY-1)]==true)
+                tablero2[x][(limY-1)]=true;
+                else
+                tablero2[x][(limY-1)]=false;
+            }
+            cuentaVivos=0;
+        }
+        for(int y=1;y<(limY-1);y++)
+        {
+            //estorevisa el limte izquierdo
+            if(tablero[0][y-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[0][y+1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[1][y-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[1][y]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[1][y+1]==true)
+            {
+                cuentaVivos++;
+            }
+            //Se revisa si la celula vive o muere
+//            if(cuentaVivos==3||cuentaVivos==2)
+//            {
+//                tablero2[0][y]=true;
+//            }
+//            else{
+//                tablero2[0][y]=false;
+//            }            
+            if(cuentaVivos==3)
+            {
+                tablero2[0][y]=true;
+            }
+            else{
+                if (cuentaVivos==2 && tablero[0][y]==true)
+                tablero2[0][y]=true;
+                else
+                tablero2[0][y]=false;
+            }
+            cuentaVivos=0;
+            //esto revisa el limite derecho
+            if(tablero[(limX-1)][y-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[(limX-1)][y+1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[(limX-1)-1][y-1]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[(limX-1)-1][y]==true)
+            {
+                cuentaVivos++;
+            }
+            if(tablero[(limX-1)-1][y+1]==true)
+            {
+                cuentaVivos++;
+            }
+            //Se revisa si la celula vive o muere
+//            if(cuentaVivos==3||cuentaVivos==2)
+//            {
+//                tablero2[(limX-1)][y]=true;
+//            }
+//            else{
+//                tablero2[(limX-1)][y]=false;
+//            }          
+            if(cuentaVivos==3)
+            {
+                tablero2[(limX-1)][y]=true;
+            }
+            else{
+                if (cuentaVivos==2 && tablero[(limX)-1][y]==true)
+                tablero2[(limX-1)][y]=true;
+                else
+                tablero2[(limX-1)][y]=false;
+            }
+            cuentaVivos=0;
+        }
+        //Esquina superior izquierda
+        if(tablero[1][0]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[1][1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[0][1])
+        {
+            cuentaVivos++;
+        }
+        //Se revisa si la celula vive o muere
+//        if(cuentaVivos==3||cuentaVivos==2)
+//        {
+//            tablero2[0][0]=true;
+//        }
+//        else{
+//            tablero2[0][0]=false;
+//        }        
+        if(cuentaVivos==3)
+        {
+            tablero2[0][0]=true;
+        }
+        else{
+            if (cuentaVivos==2 && tablero[0][0]==true)
+            tablero2[0][0]=true;
+            else
+            tablero2[0][0]=false;
+        }
+        cuentaVivos=0;
+        //Esquina superior derecha
+        if(tablero[(limX-1)-1][0]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[(limX-1)-1][1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[(limX-1)][1]==true)
+        {
+            cuentaVivos++;            
+        }
+        //Se revisa si la celula vive o muere
+//        if(cuentaVivos==3||cuentaVivos==2)
+//        {
+//            tablero2[(limX-1)][0]=true;
+//        }
+//        else{
+//            tablero2[(limX-1)][0]=false;
+//        }
+        
+        if(cuentaVivos==3)
+        {
+            tablero2[(limX-1)][0]=true;
+        }
+        else{
+            if (cuentaVivos==2 && tablero[(limX-1)][0]==true)
+            tablero2[(limX-1)][0]=true;
+            else
+            tablero2[(limX-1)][0]=false;
+        }
+        cuentaVivos=0;
+        //Esquina inferior izquierda
+        if(tablero[0][(limY-1)-1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[1][(limY-1)-1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[1][(limY-1)]==true)
+        {
+            cuentaVivos++;
+        }
+        //Se revisa si la celula vive o muere
+//        if(cuentaVivos==3||cuentaVivos==2)
+//        {
+//            tablero2[0][(limY-1)]=true;
+//        }
+//        else{
+//            tablero2[0][(limY-1)]=false;
+//        }        
+        if(cuentaVivos==3)
+        {
+            tablero2[0][(limY-1)]=true;
+        }
+        else{
+            if (cuentaVivos==2 && tablero[0][(limY-1)]==true)
+            tablero2[0][(limY-1)]=true;
+            else
+            tablero2[0][(limY-1)]=false;
+        }
+        cuentaVivos=0;
+        //Esquina inferior derecha
+        if(tablero[(limX-1)][(limY-1)-1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[(limX-1)-1][(limY-1)-1]==true)
+        {
+            cuentaVivos++;
+        }
+        if(tablero[(limX-1)-1][(limY-1)]==true)
+        {
+            cuentaVivos++;
+        }
+        //Se revisa si la celula vive o muere
+//        if(cuentaVivos==3||cuentaVivos==2)
+//        {
+//            tablero2[(limX-1)][(limY-1)]=true;
+//        }
+//        else{
+//            tablero2[(limX-1)][(limY-1)]=false;
+//        }        
+        if(cuentaVivos==3)
+        {
+            tablero2[(limX-1)][(limY-1)]=true;
+        }
+        else{
+            if (cuentaVivos==2 && tablero[(limX-1)][(limY-1)]==true)
+            tablero2[(limX-1)][(limY-1)]=true;
+            else
+            tablero2[(limX-1)][(limY-1)]=false;
+        }
+        cuentaVivos=0;
+
+//        for(int y=0;y<limY;y++)
+//        {
+//            for(int x=0;x<limX;x++)
+//            {                            
+//                //Revision de los lados izquierdo y superior
+//                if(x>0 && y>0 && x<(limX-1))
+//                {
+//                    if(tablero[x][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x+1][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x][y-1], check[x-1][y-1],check[x-1][y],check[x+1][y-1]
+//                }else if(x>0 && y==0){
+//                    if(tablero[x-1][y])
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x-1][y];
+//                }else if(y>0 && x==0){
+//                    if(tablero[x][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x+1][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x][y-1];check[x+1][y-1];
+//                }
+//                if (x<(limX-1)  && y<(limY-1) && x>0){
+//                    if(tablero[x+1][y]==true){
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x+1][y+1]==true){
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x][y+1]==true){
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y+1]==true){
+//                        cuentaVivos++;
+//                    }
+//                    //check[x+1][y];check[x+1][y+1];check[x][y+1];check[x-1][y+1];
+//                }else if(x<(limX-1) && y==limY){
+//                    if(tablero[x+1][y]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x+1][y];
+//                }else if(y<(limY-1) && x==(limX-1)){
+//                    if(tablero[x][y+1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y+1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x][y+1];check[x-1][y+1];
+//                }
+//                if(x>0 && y>0 && x==(limX-1)){
+//                    if(tablero[x][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y-1]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x-1][y]==true)
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x][y-1];check[x-1][y-1];check[x-1][y];
+//                }
+//                if(x<(limX-1) && y<(limY-1) && x==0){                    
+//                    if(tablero[x+1][y])
+//                    {
+//                        cuentaVivos++;
+//                    }                    
+//                    if(tablero[x+1][y+1])
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    if(tablero[x][y+1])
+//                    {
+//                        cuentaVivos++;
+//                    }
+//                    //check[x+1][y];check[x+1][y+1];check[x][y+1];
+//                }
+//                //si la casilla tiene solo a 3 vecinos cerca vive
+////                if(cuentaVivos==3||cuentaVivos==2)
+////                {
+////                    tablero2[x][y]=true;
+////                }
+////                else{
+////                    tablero2[x][y]=false;
+////                }
+//                if(cuentaVivos==3)
+//                {
+//                    tablero2[x][y]=true;
+//                }
+//                else{
+//                    if (cuentaVivos==2 && tablero[x][y]==true)
+//                        tablero2[x][y]=true;
+//                    else
+//                        tablero2[x][y]=false;
+//                }
+//                //se reinicia el contador
+//                cuentaVivos=0;
+//            }
+//        }        
     }
     
     private void copiaMatriz(){
