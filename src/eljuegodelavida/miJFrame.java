@@ -19,9 +19,9 @@ import javax.swing.Timer;
 public class miJFrame extends javax.swing.JFrame {
     boolean tablero[][];
     boolean tablero2[][];
-    int limX,limY,genAct;    
-    Timer timer = new Timer (1_000, new ActionListener () 
-        {                                      
+    int limX,limY,genAct;
+    Timer timer = new Timer (500, new ActionListener () 
+        {        
             @Override
             public void actionPerformed(ActionEvent e)
             {                   
@@ -524,7 +524,7 @@ public class miJFrame extends javax.swing.JFrame {
         try{
             //se verifica que los datos en las cajas de texto sean correctos
             limX=Integer.parseInt(jTextField1.getText());
-            limY=Integer.parseInt(jTextField2.getText());                   
+            limY=Integer.parseInt(jTextField2.getText());               
         }catch(NumberFormatException nfe){
             //se lanza mensaje de error en caso de la introduccion de un valor incorrecto
             JOptionPane.showMessageDialog(null, "Los valores ingresados para el tamaño del tablero deben ser numeros y enteros","Error",JOptionPane.ERROR_MESSAGE);
