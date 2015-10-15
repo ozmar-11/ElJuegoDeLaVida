@@ -17,7 +17,6 @@ import javax.swing.Timer;
  * @author ozmarhumberto
  */
 public class miJFrame extends javax.swing.JFrame {
-
     boolean tablero[][];
     boolean tablero2[][];
     int limX,limY,genAct;    
@@ -27,40 +26,76 @@ public class miJFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e)
             {                   
                 generacion();
-                genAct++;                
+                genAct++;
+                copiaMatriz();
                 repaint();
                 jLabel2.setText(String.valueOf(genAct));                 
             }
         });
-    
+    //Es el metodo principal para el juego
     public void dimencionarTablero(int x, int y){
         tablero = new boolean[x][y];
         tablero2 = new boolean[x][y];
-//        tablero[22][25]=true;
-//        tablero[23][24]=true;
-//        tablero[25][25]=true;
-//        tablero[24][24]=true;
-//        tablero[24][26]=true;
-//        tablero[23][26]=true;
-//        tablero[26][24]=true;
-//        tablero[26][26]=true;
-//        tablero[27][24]=true;
-//        tablero[27][26]=true;
-//        tablero[28][25]=true;
-        
-        tablero[1][0]=true;
-        tablero[3][0]=true;
-        tablero[2][1]=true;
-        tablero[1][2]=true;
-        tablero[3][2]=true;
+        //Se llena el tablero con datos al azar
+        for (int i=0;i<y;i++)
+        {
+            for(int j=0;j<x;j++)
+            {
+                if((Math.round(Math.random()*10)%2)==0)
+                {
+                    tablero[j][i]=true;
+                }
+            }
+        }
         limX=x;
         limY=y;
+        repaint();
+    }
+    //Inicializar con ejemplo 1
+    public void ejemplo2(int x, int y)
+    {
+        //Se inicializa el tablero y la matriz de apoyo
+        tablero = new boolean[x][y];
+        tablero2 = new boolean[x][y]; 
+        //Se inicializa el ejemplo
+        tablero[23][23]=true;
+        tablero[23][24]=true;
+        tablero[24][24]=true;
+        tablero[24][25]=true;
+        tablero[25][24]=true;
+        //Se definen los limites
+        limX=x;
+        limY=y;
+        //Se muestra en pantalla el resultado
+        repaint();
+    }
+    //Inicializar con ejemplo 2
+    public void ejemplo1(int x, int y)
+    {
+        //Se inicializa el tablero y la matriz de apoyo
+        tablero = new boolean[x][y];
+        tablero2 = new boolean[x][y];
+        //Se inicializa el ejemplo
+        tablero[22][25]=true;
+        tablero[23][24]=true;
+        tablero[25][25]=true;
+        tablero[24][24]=true;
+        tablero[24][26]=true;
+        tablero[23][26]=true;
+        tablero[26][24]=true;
+        tablero[26][26]=true;
+        tablero[27][24]=true;
+        tablero[27][26]=true;
+        tablero[28][25]=true;
+        //Se definen los limites para el resto del programa
+        limX=x;
+        limY=y;
+        //Se muestran los resultados en pantalla
         repaint();
     }
     //funcion para crear la nueva generacion de casillas
     public void generacion(){
         int cuentaVivos=0;
-        
         //Ciclos para revisar todas las celadas excepto los limites
         for(int y=1;y<(limY-1);y++)
         {
@@ -98,14 +133,7 @@ public class miJFrame extends javax.swing.JFrame {
                 {
                     cuentaVivos++;
                 }
-                //Se revisa si la celula vive o muere
-//                if(cuentaVivos==3||cuentaVivos==2)
-//                {
-//                    tablero2[x][y]=true;
-//                }
-//                else{
-//                    tablero2[x][y]=false;
-//                }                
+               
                 if(cuentaVivos==3)
                 {
                     tablero2[x][y]=true;
@@ -142,14 +170,7 @@ public class miJFrame extends javax.swing.JFrame {
             {
                 cuentaVivos++;
             }
-            //Se revisa si la celula vive o muere
-//            if(cuentaVivos==3||cuentaVivos==2)
-//            {
-//                tablero2[x][0]=true;
-//            }
-//            else{
-//                tablero2[x][0]=false;
-//            }            
+
             if(cuentaVivos==3)
             {
                 tablero2[x][0]=true;
@@ -182,14 +203,7 @@ public class miJFrame extends javax.swing.JFrame {
             {
                 cuentaVivos++;
             }
-            //Se revisa si la celula vive o muere
-//            if(cuentaVivos==3||cuentaVivos==2)
-//            {
-//                tablero2[x][(limY-1)]=true;
-//            }
-//            else{
-//                tablero2[x][(limY-1)]=false;
-//            }            
+            //Se revisa si la celula vive o muere         
             if(cuentaVivos==3)
             {
                 tablero2[x][(limY-1)]=true;
@@ -225,14 +239,7 @@ public class miJFrame extends javax.swing.JFrame {
             {
                 cuentaVivos++;
             }
-            //Se revisa si la celula vive o muere
-//            if(cuentaVivos==3||cuentaVivos==2)
-//            {
-//                tablero2[0][y]=true;
-//            }
-//            else{
-//                tablero2[0][y]=false;
-//            }            
+         
             if(cuentaVivos==3)
             {
                 tablero2[0][y]=true;
@@ -265,14 +272,7 @@ public class miJFrame extends javax.swing.JFrame {
             {
                 cuentaVivos++;
             }
-            //Se revisa si la celula vive o muere
-//            if(cuentaVivos==3||cuentaVivos==2)
-//            {
-//                tablero2[(limX-1)][y]=true;
-//            }
-//            else{
-//                tablero2[(limX-1)][y]=false;
-//            }          
+         
             if(cuentaVivos==3)
             {
                 tablero2[(limX-1)][y]=true;
@@ -298,14 +298,7 @@ public class miJFrame extends javax.swing.JFrame {
         {
             cuentaVivos++;
         }
-        //Se revisa si la celula vive o muere
-//        if(cuentaVivos==3||cuentaVivos==2)
-//        {
-//            tablero2[0][0]=true;
-//        }
-//        else{
-//            tablero2[0][0]=false;
-//        }        
+     
         if(cuentaVivos==3)
         {
             tablero2[0][0]=true;
@@ -330,15 +323,7 @@ public class miJFrame extends javax.swing.JFrame {
         {
             cuentaVivos++;            
         }
-        //Se revisa si la celula vive o muere
-//        if(cuentaVivos==3||cuentaVivos==2)
-//        {
-//            tablero2[(limX-1)][0]=true;
-//        }
-//        else{
-//            tablero2[(limX-1)][0]=false;
-//        }
-        
+
         if(cuentaVivos==3)
         {
             tablero2[(limX-1)][0]=true;
@@ -363,14 +348,7 @@ public class miJFrame extends javax.swing.JFrame {
         {
             cuentaVivos++;
         }
-        //Se revisa si la celula vive o muere
-//        if(cuentaVivos==3||cuentaVivos==2)
-//        {
-//            tablero2[0][(limY-1)]=true;
-//        }
-//        else{
-//            tablero2[0][(limY-1)]=false;
-//        }        
+     
         if(cuentaVivos==3)
         {
             tablero2[0][(limY-1)]=true;
@@ -395,14 +373,7 @@ public class miJFrame extends javax.swing.JFrame {
         {
             cuentaVivos++;
         }
-        //Se revisa si la celula vive o muere
-//        if(cuentaVivos==3||cuentaVivos==2)
-//        {
-//            tablero2[(limX-1)][(limY-1)]=true;
-//        }
-//        else{
-//            tablero2[(limX-1)][(limY-1)]=false;
-//        }        
+      
         if(cuentaVivos==3)
         {
             tablero2[(limX-1)][(limY-1)]=true;
@@ -413,132 +384,7 @@ public class miJFrame extends javax.swing.JFrame {
             else
             tablero2[(limX-1)][(limY-1)]=false;
         }
-        cuentaVivos=0;
-
-//        for(int y=0;y<limY;y++)
-//        {
-//            for(int x=0;x<limX;x++)
-//            {                            
-//                //Revision de los lados izquierdo y superior
-//                if(x>0 && y>0 && x<(limX-1))
-//                {
-//                    if(tablero[x][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x+1][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x][y-1], check[x-1][y-1],check[x-1][y],check[x+1][y-1]
-//                }else if(x>0 && y==0){
-//                    if(tablero[x-1][y])
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x-1][y];
-//                }else if(y>0 && x==0){
-//                    if(tablero[x][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x+1][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x][y-1];check[x+1][y-1];
-//                }
-//                if (x<(limX-1)  && y<(limY-1) && x>0){
-//                    if(tablero[x+1][y]==true){
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x+1][y+1]==true){
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x][y+1]==true){
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y+1]==true){
-//                        cuentaVivos++;
-//                    }
-//                    //check[x+1][y];check[x+1][y+1];check[x][y+1];check[x-1][y+1];
-//                }else if(x<(limX-1) && y==limY){
-//                    if(tablero[x+1][y]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x+1][y];
-//                }else if(y<(limY-1) && x==(limX-1)){
-//                    if(tablero[x][y+1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y+1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x][y+1];check[x-1][y+1];
-//                }
-//                if(x>0 && y>0 && x==(limX-1)){
-//                    if(tablero[x][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y-1]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x-1][y]==true)
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x][y-1];check[x-1][y-1];check[x-1][y];
-//                }
-//                if(x<(limX-1) && y<(limY-1) && x==0){                    
-//                    if(tablero[x+1][y])
-//                    {
-//                        cuentaVivos++;
-//                    }                    
-//                    if(tablero[x+1][y+1])
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    if(tablero[x][y+1])
-//                    {
-//                        cuentaVivos++;
-//                    }
-//                    //check[x+1][y];check[x+1][y+1];check[x][y+1];
-//                }
-//                //si la casilla tiene solo a 3 vecinos cerca vive
-////                if(cuentaVivos==3||cuentaVivos==2)
-////                {
-////                    tablero2[x][y]=true;
-////                }
-////                else{
-////                    tablero2[x][y]=false;
-////                }
-//                if(cuentaVivos==3)
-//                {
-//                    tablero2[x][y]=true;
-//                }
-//                else{
-//                    if (cuentaVivos==2 && tablero[x][y]==true)
-//                        tablero2[x][y]=true;
-//                    else
-//                        tablero2[x][y]=false;
-//                }
-//                //se reinicia el contador
-//                cuentaVivos=0;
-//            }
-//        }        
+        cuentaVivos=0;      
     }
     
     private void copiaMatriz(){
@@ -576,7 +422,8 @@ public class miJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("El Juego de la vida");
@@ -597,12 +444,12 @@ public class miJFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Tablero X:");
 
-        jTextField1.setText("5");
+        jTextField1.setText("50");
         jTextField1.setName("txtTableroX"); // NOI18N
 
         jLabel4.setText("Tamaño en Y:");
 
-        jTextField2.setText("3");
+        jTextField2.setText("50");
         jTextField2.setName("txtTableroY"); // NOI18N
 
         jButton2.setText("Detener");
@@ -613,10 +460,17 @@ public class miJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setLabel("Siguiente generacion");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("Ejemplo 1");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Ejemplo 2");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -641,8 +495,10 @@ public class miJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(0, 454, Short.MAX_VALUE))
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addGap(0, 407, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -656,7 +512,8 @@ public class miJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addGap(0, 731, Short.MAX_VALUE))
         );
 
@@ -677,22 +534,30 @@ public class miJFrame extends javax.swing.JFrame {
             repaint();
             dimencionarTablero(limX,limY);
             genAct=0;
-            //timer.start();     
-            //jButton2.setEnabled(true);
+            timer.start();     
+            jButton2.setEnabled(true);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //timer.stop();   
+        timer.stop();   
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        generacion();
-        copiaMatriz();
-        repaint();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        ejemplo1(50,50);
+        genAct=0;
+        timer.start();     
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ejemplo2(50,50);
+        genAct=0;
+        timer.start();     
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
      
     /**
      * @param args the command line arguments
@@ -762,7 +627,8 @@ public class miJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
